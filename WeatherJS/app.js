@@ -1,9 +1,20 @@
 // init
-const weather = new Weather("Boston", "MA");
 const ul = new UI();
+const storage = new Storage();
+const weatherLocation = storage.getLocationData();
+const weather = new Weather(weatherLocation.city, weatherLocation.state);
 
 document.addEventListener("DOMContentLoaded", getWeather);
-//weather.chengeLocation('Miami', 'FL');
+
+document.getElementById("w-chenge-btn").addEventListener('click', (e) => {
+  const city = document.getElementById('city').value;
+  const state = document.getElementById('state').value;
+
+  weather.chengeLocation(city, state);
+  storage.setLocationData(city, state)
+  getWeather();
+  $('#locModal').modal('hide');
+});
 
 function getWeather() {
   weather
